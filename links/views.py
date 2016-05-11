@@ -5,6 +5,7 @@ from .models import Link
 
 class LinkListView(ListView):
     model = Link
-    template_name = 'links/link.html'
+    template_name = 'links/list.html'
+    context_object_name = 'links'
 
 

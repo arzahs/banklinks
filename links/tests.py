@@ -57,12 +57,13 @@ class LinksListTest(TestCase):
         self.client = Client()
 
         self.url = reverse('links:list')
+        self.user = user
 
     def test_list_links(self):
-        print(self.url)
+        links = Link.objects.filter(user=self.user).order_by('date')
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
-        self.assertIn('google.com', response.content)
-        self.assertIn('yandex.com', response.content)
+        self.assertIn(links[0].get_absolute_url(), response.content.decode('utf8'))
+        self.assertIn(links[1].get_absolute_url(), response.content.decode('utf8'))
         self.assertEqual(len(response.context['links']), 2)
 
