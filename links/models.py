@@ -11,6 +11,9 @@ class Link(models.Model):
     date = models.DateTimeField(_("Дата содания"), auto_now=True)
     tags = models.ManyToManyField(Tag)
 
+    def get_absolute_url(self):
+        return self.link
+
     class Meta:
         verbose_name = _("Ccылка")
         verbose_name_plural = _("Ccылки")
