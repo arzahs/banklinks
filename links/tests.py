@@ -3,6 +3,7 @@ from django.conf import settings
 from .models import Link
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from tagging.models import Tag
 
 
 class LinkModelTest(TestCase):
@@ -76,7 +77,7 @@ class LinksListTest(TestCase):
 class LinksFormTest(TestCase):
 
     def setUp(self):
-        user = User.objects.create_user(
+        self.user = User.objects.create_user(
             username='admin',
             email='test@mail.com',
             password='admin123'
@@ -98,7 +99,25 @@ class LinksFormTest(TestCase):
         self.assertIn('method="POST"', response.content.decode('utf8'))
         self.assertIn('action="{0}"'.format(self.url), response.content.decode('utf8'))
         self.assertIn('type="submit"', response.content.decode('utf8'))
-        
+
+    def test_success(self):
+        self.client.login(username='admin', password='admin123')
+
+        response = self.client.post(self.url, {'user': self.user,
+                                               'link': 'http://ya.com',
+                                               'comment': 'site #programming'})
+
+        self.assertEqual(response.status_code, 302)
+        link = Link.objects.all()[0]
+        self.assertEqual(link.link, 'http://ya.com')
+        self.assertEqual(link.comment, 'site #programming')
+
+        tag = Tag.objects.get(name='programming')
+
+
+
+
+
 
 
 

@@ -5,6 +5,6 @@ from .models import Link
 class AddLinkForm(ModelForm):
     class Meta:
         model = Link
-        fields = ['link', 'comment', 'tags']
+        fields = ['link', 'comment']
 
 
