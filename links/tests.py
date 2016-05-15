@@ -76,24 +76,31 @@ class LinksListTest(TestCase):
 class LinksFormTest(TestCase):
 
     def setUp(self):
-        # user = User.objects.create_user(
-        #     username='Alex',
-        #     email='test@test.com',
-        #     password='testtesttest'
-        # )
+        user = User.objects.create_user(
+            username='admin',
+            email='test@mail.com',
+            password='admin123'
+        )
         self.client = Client()
         self.url = reverse('links:add')
 
     def test_get_new_link(self):
-        self.client.login(username='Alex', password='testtesttest')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+
+        self.client.login(username='admin', password='admin123')
 
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
 
-        self.assertIn(u'Ccылка', response.content.decode('utf8'))
-        self.assertIn(u'Комментарий', response.content.decode('utf8'))
-        self.assertIn(u'method="POST"', response.content.decode('utf8'))
-        self.assertIn(u'action={fun}'.format(fun=self.url), response.content.decode('utf8'))
+        self.assertIn('Ссылка:', response.content.decode('utf8'))
+        self.assertIn('Комментарий', response.content.decode('utf8'))
+        self.assertIn('method="POST"', response.content.decode('utf8'))
+        self.assertIn('action="{0}"'.format(self.url), response.content.decode('utf8'))
+        self.assertIn('type="submit"', response.content.decode('utf8'))
+        
+
+
 
 
 
