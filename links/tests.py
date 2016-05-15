@@ -92,7 +92,6 @@ class LinksFormTest(TestCase):
 
         self.assertIn(u'Ccылка', response.content.decode('utf8'))
         self.assertIn(u'Комментарий', response.content.decode('utf8'))
-        self.assertIn(u'Дата содания', response.content.decode('utf8'))
         self.assertIn(u'method="POST"', response.content.decode('utf8'))
         self.assertIn(u'action={fun}'.format(fun=self.url), response.content.decode('utf8'))
 
