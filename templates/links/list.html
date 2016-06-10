@@ -9,6 +9,9 @@
 <h1>Вывод списка</h1>
 {% for link in links %}
     <a target="_blank" href="{{ link.get_absolute_url }}">{{ link.link }}</a>
+    {% for tag in link.tags.all %}
+        {{ tag.name }}
+     {% endfor %}
     <p>{{ link.comment }}</p>
     {{ link.date }}
     <br>

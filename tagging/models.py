@@ -13,4 +13,6 @@ class Tag(models.Model):
         verbose_name = _("Тег")
         verbose_name_plural = _("Теги")
 
+    def __str__(self):
+        return u'{0} {1}'.format(self.user.username, self.name)
 

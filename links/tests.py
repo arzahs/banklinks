@@ -1,9 +1,8 @@
 from django.test import TestCase, Client
-from django.conf import settings
-from .models import Link
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from tagging.models import Tag
+from .models import Link
 
 
 class LinkModelTest(TestCase):
